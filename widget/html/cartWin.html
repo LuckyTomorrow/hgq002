@@ -27,7 +27,7 @@
         var header = $api.byId('aui-header');
         $api.fixStatusBar(header);
 
-        var title_head = $api.dom(header,'aui-title');
+        var title_head = $api.dom(header,'.aui-title');
         $api.text(title_head,title);
         var header_H = $api.offset(header).h;
         api.openFrame({
