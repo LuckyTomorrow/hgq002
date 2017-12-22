@@ -5,8 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
     <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
-    <title>海外购</title>
-    <link rel="stylesheet" type="text/css" href="../css/api.css" />
+    <title>分类商品</title>
     <link rel="stylesheet" type="text/css" href="../css/aui.css" />
     <style type="text/css">
         .spanTitle {
@@ -22,40 +21,15 @@
 </head>
 
 <body>
-  <!--顶部搜索框-->
-  <div class="aui-bar aui-bar-nav " style="background-color: #EC425B" id='header'>
-      <a class="aui-pull-left aui-btn">
-          <span class="aui-iconfont aui-icon-left"></span>
-      </a>
-      <div class="aui-title" style="left:2rem; right: 2rem;">
-          <div class="aui-searchbar" style="background-color: #EC425B">
-              <div class="aui-searchbar-input aui-border-radius">
-                  <i class="aui-iconfont aui-icon-search"></i>
-                  <form onsubmit="searchKeyWords();">
-                      <input type="search" placeholder="搜你所爱" id="search-input">
-                  </form>
-              </div>
-          </div>
-      </div>
-      <div class="aui-pull-right aui-btn" tapmode onclick="openSharebox();">
-          <span class="aui-iconfont aui-icon-share"></span>
-      </div>
-  </div>
-  <!--顶部搜索框-->
-    <!--分类标签-->
 
-    <!--分类标签-->
-
-    <!--商品排列-->
     <section class="aui-content">
-
-        <script id="juhsTemp" type="text/x-dot-template">
-            {{ for(var i=0; i < it.length; i++) { }}
-            <div class='aui-col-xs-6 aui-margin-b-10 aui-padded-l-5 aui-padded-r-5'>
+        <script id="cartTemp" type="text/x-dot-template">
+            {{ for(var i=0; i
+            < it.length; i++) { }} <div class='aui-col-xs-6 aui-margin-b-10 aui-padded-l-5 aui-padded-r-5'>
                 <div class="aui-padded-l-0 aui-padded-r-0" style='border:1px solid #D3D3D3;'>
                     <a href="{{=it[i].diadurl}}">
                         <img src="{{=it[i].pic_url}}" onload='ChangePic(this);' style='height:8rem;width:100%;display:none;' />
-                        <img src="../image/loading.png" style='height:8rem;width:100%;display:block' />
+                        <img src="../image/loading.png" style='height:8rem;width:100%;' />
                         <div><span class='spanTitle aui-font-size-14 aui-text-default'>&nbsp{{=it[i].title}}</span>
                         </div>
                         <div><span style="color:#EC425B;" class='aui-font-size-20'>&nbsp￥{{=it[i].coupon_quan_price}}</span>&nbsp&nbsp
@@ -63,23 +37,21 @@
                         </div>
                     </a>
                 </div>
-              </div>
+                </div>
                 {{ } }}
         </script>
-        <div class="aui-row aui-margin-t-10" id="juhs"></div>
-
+        <div class="aui-row aui-margin-t-10" id="cart"></div>
     </section>
-    <!--商品排列-->
+
 </body>
 <script type="text/javascript" src="../script/api.js"></script>
 <script type="text/javascript" src="../script/doT.min.js"></script>
-<script type="text/javascript">
+<script>
     apiready = function() {
-      api.parseTapmode();
-      header = $api.byId('header');
-      $api.fixStatusBar(header);
+        cid = api.pageParam.cid;
+        api.parseTapmode();
 
-      frameInit();
+        getCid();
         //下拉刷新设置
         api.setCustomRefreshHeaderInfo({
             bgColor: '#C0C0C0',
@@ -102,9 +74,7 @@
                 ]
             }
         }, function() {
-            //下拉刷新
-            frameInit();
-            //刷新成功后取消刷新动画效果
+            getCid();
             api.refreshHeaderLoadDone();
         });
 
@@ -115,32 +85,34 @@
             loadData();
         });
 
+        api.addEventListener({
+            name: 'keyback'
+        }, function(ret, err) {
+            api.closeWin();
+        });
+
     }
 
-    //页数即位一次ajax请求增加的商品数
-    var pagecount = 0;
-    //data数据
     var intData;
-    //上拉刷新，ajax请求新的数据
-    function loadData() {
-        pagecount = pagecount + 1;
+    //点击横向tab，ajax获取特定商品
+    function getCid() {
+        page = 1;
         api.ajax({
-            url: 'http://www.zaixianclock.com/App/Index/haiwaigou',
+            url: 'http://www.zaixianclock.com/App/Index/getCid',
             method: 'post',
             data: {
                 values: {
-                    page: pagecount
+                    cid: cid,
+                    page: page
                 }
             }
         }, function(ret, err) {
             if (JSON.stringify(ret) !== "[]") {
                 //如果获取成功，将返回的数据进行js模板排列数据
-                if (intData) {
-                    intData = mergerJsonArr(intData, ret);
-                    InitGoodsList(intData);
-                }
+                InitGoodsList(ret);
+                intData = ret;
             } else {
-                pagecount -=1;
+                alert("暂无所需商品");
             }
         });
     }
@@ -157,56 +129,47 @@
         return resultJsonObject;
     }
 
-    //apiready后对聚划算frame进行初始化数据的ajax获取
-    function frameInit() {
-        pagecount = 1;
+    //js模板引擎，用于循环排列商品信息
+    function InitGoodsList(ret) {
+        var datas = ret;
+        var dataText = doT.template($api.dom('#cartTemp').innerHTML);
+        $api.dom('#cart').innerHTML = dataText(datas);
+    }
+
+    //在网上图片加载成功后切换图片
+    function ChangePic(node) {
+        var nextNode = $api.next(node);
+        $api.css(node, "display:block");
+        $api.css(nextNode, "display:none");
+    }
+
+    var page = 1;
+
+    //上拉刷新，ajax请求新的数据
+    function loadData() {
+        page += 1;
         api.ajax({
-            url: 'http://www.zaixianclock.com/App/Index/haiwaigou',
+            url: 'http://www.zaixianclock.com/App/Index/getCid',
             method: 'post',
             data: {
                 values: {
-                    page: pagecount
+                    cid: cid,
+                    page: page
                 }
             }
         }, function(ret, err) {
             if (JSON.stringify(ret) !== "[]") {
                 //如果获取成功，将返回的数据进行js模板排列数据
-                InitGoodsList(ret);
-                intData = ret;
-                pagecount = 0;
+                if (intData) {
+                    intData = mergerJsonArr(intData, ret);
+                    InitGoodsList(intData);
+                }
             } else {
-                alert("暂无商品");
+                page -= 1;
             }
         });
     }
 
-    //js模板引擎，用于循环排列商品信息
-    function InitGoodsList(ret) {
-        var datas = ret;
-        var dataText = doT.template($api.dom('#juhsTemp').innerHTML);
-        $api.dom('#juhs').innerHTML = dataText(datas);
-    }
-
-    //在网上图片加载成功后切换图片
-    function ChangePic(node){
-      var nextNode = $api.next(node);
-      $api.css(node,"display:block");
-      $api.css(nextNode,"display:none");
-    }
-
-    //搜索框查询 keyword商品
-    function searchKeyWords() {
-        var el = $api.byId('search-input');
-        var keyword = $api.val(el);
-        api.openWin({
-            name: 'searchWin',
-            url: './searchKey_win.html',
-            pageParam: {
-                cartId: keyword
-            }
-        });
-        return false;
-    }
 </script>
 
 </html>

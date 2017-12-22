@@ -275,6 +275,7 @@
         api.parseTapmode();
         header = $api.byId('header');
         $api.fixStatusBar(header);
+        
         Zepto(function($) {
             // home页 样式 初始化
             var sp1_2;
@@ -314,7 +315,7 @@
         var keyword = $api.val(el);
         api.openWin({
             name: 'searchWin',
-            url: './searchKey.html',
+            url: './searchKey_win.html',
             pageParam: {
                 cartId: keyword
             }

@@ -18,12 +18,12 @@
 
 </body>
 <script type="text/javascript" src="../script/api.js"></script>
-<script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
 <script type="text/javascript">
     apiready = function() {
         api.parseTapmode();
         var header = $api.byId('aui-header');
         $api.fixStatusBar(header);
+        
         var headerPos = $api.offset(header);
         var body_h = $api.offset($api.dom('body')).h;
         api.openFrame({

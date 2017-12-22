@@ -24,8 +24,9 @@
     apiready = function() {
         api.parseTapmode();
         var header = $api.byId('aui-header');
-        var hearder_H = $api.offset(header).h;
         $api.fixStatusBar(header);
+
+        var hearder_H = $api.offset(header).h;        
 
         api.openFrame({
             name: 'searchFrm',

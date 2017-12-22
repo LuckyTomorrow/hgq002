@@ -8,7 +8,7 @@
 </head>
 <body>
     <header class="aui-bar aui-bar-nav" style="background-color:#EC425B;" id="aui-header">
-        <a class="aui-btn aui-pull-left" tapmode onclick="closeWin();">
+        <a class="aui-btn aui-pull-left" tapmode onclick="api.closeWin();">
             <span class="aui-iconfont aui-icon-left"></span>
         </a>
         <div class="aui-title">聚划算</div>
@@ -20,6 +20,7 @@
         api.parseTapmode();
         var header = $api.byId('aui-header');
         $api.fixStatusBar(header);
+        
         var headerPos = $api.offset(header);
         var body_h = $api.offset($api.dom('body')).h;
         api.openFrame({
@@ -41,10 +42,6 @@
         });
 
       }
-
-    function closeWin(){
-        api.closeWin();
-    }
 
 </script>
 </html>

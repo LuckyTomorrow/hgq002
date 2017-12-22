@@ -78,6 +78,7 @@
         api.parseTapmode();
         header = $api.byId('header');
         $api.fixStatusBar(header);
+        
         frameInit();
         //下拉刷新设置
         api.setCustomRefreshHeaderInfo({
@@ -199,7 +200,7 @@
         var keyword = $api.val(el);
         api.openWin({
             name: 'searchWin',
-            url: './searchKey.html',
+            url: './searchKey_win.html',
             pageParam: {
                 cartId: keyword
             }

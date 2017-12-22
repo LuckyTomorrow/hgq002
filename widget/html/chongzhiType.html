@@ -10,7 +10,7 @@
 
 <body>
     <header class="aui-bar aui-bar-nav" style="background-color:#EC425B;" id="header">
-        <a class="aui-btn aui-pull-left" tapmode onclick="closeWin();">
+        <a class="aui-btn aui-pull-left" tapmode onclick="api.closeWin();">
             <span class="aui-iconfont aui-icon-left"></span>
         </a>
         <div class="aui-title aui-font-size-16">话费充值</div>
@@ -21,7 +21,7 @@
 <script type="text/javascript">
     apiready = function() {
         api.parseTapmode();
-        var header = $api.byId('header');
+        header = $api.byId('header');
         $api.fixStatusBar(header);
 
         type = api.pageParam.type;
@@ -30,7 +30,7 @@
         }, function(ret, err) {
             api.closeWin();
         });
-        
+
         openChongzhi(type);
     }
     var type;
@@ -77,7 +77,6 @@
                 break;
 
         }
-        var header = $api.byId('header');
         var hearerH = $api.offset(header).h;
 
         api.openFrame({
@@ -101,10 +100,6 @@
             hScrollBarEnabled: true
         });
 
-    }
-
-    function closeWin() {
-        api.closeWin();
     }
 </script>
 
