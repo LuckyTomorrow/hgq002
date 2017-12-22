@@ -63,13 +63,13 @@
     <section class="aui-content aui-margin-b-15">
         <div class="aui-list-item-inner">
             <div class="aui-row aui-row-padded">
-                <div class="aui-col-xs-4" tapmode onclick="openCart('girlshoe');">
+                <div class="aui-col-xs-4" tapmode onclick="openCart('girlshoe','精品女鞋');">
                     <img src="../image/womenshoe.png" />
                 </div>
-                <div class="aui-col-xs-4" tapmode onclick="openCart('girlqunzi');">
+                <div class="aui-col-xs-4" tapmode onclick="openCart('girlqunzi','时尚美裙');">
                     <img src="../image/girlqunzi.png" />
                 </div>
-                <div class="aui-col-xs-4" tapmode onclick="openCart('girlcaizhuang');">
+                <div class="aui-col-xs-4" tapmode onclick="openCart('girlcaizhuang','美妆');">
                     <img src="../image/caizhuang.png" />
                 </div>
             </div>
@@ -84,13 +84,13 @@
     <section class="aui-content aui-margin-b-15">
         <div class="aui-list-item-inner">
             <div class="aui-row aui-row-padded">
-                <div class="aui-col-xs-4" tapmode onclick="openCart('boyhuabanxie');">
+                <div class="aui-col-xs-4" tapmode onclick="openCart('boyhuabanxie','滑板鞋');">
                     <img src="../image/huabanxie.png" />
                 </div>
-                <div class="aui-col-xs-4" tapmode onclick="openCart('boyTxu');">
+                <div class="aui-col-xs-4" tapmode onclick="openCart('boyTxu','潮男T恤');">
                     <img src="../image/boyTxu.png" />
                 </div>
-                <div class="aui-col-xs-4" tapmode onclick="openCart('boyerji');">
+                <div class="aui-col-xs-4" tapmode onclick="openCart('boyerji','耳机');">
                     <img src="../image/erji.png" />
                 </div>
             </div>
@@ -145,17 +145,18 @@
 
     }
 
-    function openCart(cartId) {
+    function openCart(cartId,title) {
         api.openWin({
             name: 'cartWin',
             url: './cartWin.html',
             pageParam: {
                 cartId: cartId
+                title: title
             }
         });
 
     }
-    
+
 </script>
 
 </html>

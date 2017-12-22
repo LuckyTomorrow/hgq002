@@ -14,19 +14,21 @@
         <a class="aui-btn aui-pull-left" tapmode onclick="api.closeWin();">
             <span class="aui-iconfont aui-icon-left"></span>
         </a>
-        <div class="aui-title aui-font-size-16">所有商品</div>
+        <div class="aui-title aui-font-size-16"></div>
     </header>
 
 </body>
 <script type="text/javascript" src="../script/api.js"></script>
 <script type="text/javascript">
     apiready = function() {
-        cartId = api.pageParam.cartId;
+        title = api.pageParam.title;
         pagecount = 1;
         api.parseTapmode();
         var header = $api.byId('aui-header');
         $api.fixStatusBar(header);
 
+        var title_head = $api.dom(header,'aui-title');
+        $api.text(title_head,title);
         var header_H = $api.offset(header).h;
         api.openFrame({
             name: 'cartFrm',
