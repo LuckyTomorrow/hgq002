@@ -26,7 +26,7 @@
         var header = $api.byId('aui-header');
         $api.fixStatusBar(header);
 
-        var hearder_H = $api.offset(header).h;        
+        var hearder_H = $api.offset(header).h;
 
         api.openFrame({
             name: 'searchFrm',
@@ -36,6 +36,12 @@
                 y: hearder_H,
                 w: 'auto',
                 h: 'auto'
+            },
+            progress: {
+                type: "default",
+                title: "正在加载",
+                text: "",
+                color: "#EC425B"
             },
             pageParam: {
                 cartId: api.pageParam.cartId
