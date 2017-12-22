@@ -106,26 +106,7 @@
 </head>
 
 <body>
-    <!--顶部搜索框-->
-    <div class="aui-bar aui-bar-nav " style="background-color: #EC425B" id='header'>
-        <a class="aui-pull-left aui-btn">
-            <span class="aui-iconfont aui-icon-left"></span>
-        </a>
-        <div class="aui-title" style="left:2rem; right: 2rem;">
-            <div class="aui-searchbar" style="background-color: #EC425B">
-                <div class="aui-searchbar-input aui-border-radius">
-                    <i class="aui-iconfont aui-icon-search"></i>
-                    <form onsubmit="searchKeyWords();">
-                        <input type="search" placeholder="搜你所爱" id="search-input">
-                    </form>
-                </div>
-            </div>
-        </div>
-        <div class="aui-pull-right aui-btn" tapmode onclick="openSharebox();">
-            <span class="aui-iconfont aui-icon-share"></span>
-        </div>
-    </div>
-    <!--顶部搜索框-->
+
     <div id="wrap">
         <div id="main">
             <!-- 下方详情 -->
@@ -273,8 +254,6 @@
 <script type="text/javascript">
     apiready = function() {
         api.parseTapmode();
-        header = $api.byId('header');
-        $api.fixStatusBar(header);
 
         Zepto(function($) {
             // home页 样式 初始化
@@ -309,19 +288,6 @@
         });
     }
 
-    //搜索框查询 keyword商品
-    function searchKeyWords() {
-        var el = $api.byId('search-input');
-        var keyword = $api.val(el);
-        api.openWin({
-            name: 'searchWin',
-            url: './searchKey_win.html',
-            pageParam: {
-                cartId: keyword
-            }
-        });
-        return false;
-    }
 </script>
 
 </html>
