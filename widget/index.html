@@ -11,26 +11,7 @@
 </head>
 
 <body>
-    <!--顶部搜索框-->
-    <div class="aui-bar aui-bar-nav " style="background-color: #EC425B" id='header'>
-        <a class="aui-pull-left aui-btn">
-            <span class="aui-iconfont aui-icon-left"></span>
-        </a>
-        <div class="aui-title" style="left:2rem; right: 2rem;">
-            <div class="aui-searchbar" style="background-color: #EC425B">
-                <div class="aui-searchbar-input aui-border-radius">
-                    <i class="aui-iconfont aui-icon-search"></i>
-                    <form onsubmit="searchKeyWords();">
-                        <input type="search" placeholder="搜你所爱" id="search-input">
-                    </form>
-                </div>
-            </div>
-        </div>
-        <div class="aui-pull-right aui-btn" tapmode onclick="openSharebox();">
-            <span class="aui-iconfont aui-icon-share"></span>
-        </div>
-    </div>
-    <!--顶部搜索框-->
+
 
     <footer class="aui-bar aui-bar-tab" id="footer">
         <div class="aui-bar-tab-item" tapmode onclick="randomSwitchBtn(0);">
@@ -57,17 +38,13 @@
 
 </body>
 <script type="text/javascript" src="./script/api.js"></script>
-<script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
 <script type="text/javascript">
     //先设置头部高度，再在main区域打开frame
     apiready = function() {
         api.parseTapmode();
-        header = $api.byId('header');
-        $api.fixStatusBar(header);
 
         footer = 　$api.byId('footer');
         body_h = api.winHeight;
-        header_h = $api.offset(header).h;
         footer_h = $api.offset(footer).h;
 
         funIniGroup();
@@ -90,9 +67,9 @@
             scrollEnabled: false,
             rect: {
                 x: 0,
-                y: header_h,
+                y: 0,
                 w: 'auto',
-                h: body_h - footer_h - header_h
+                h: body_h - footer_h
             },
             index: 0,
             frames: frames
@@ -152,19 +129,7 @@
 
     }
 
-    //搜索框查询 keyword商品
-    function searchKeyWords() {
-        var el = $api.byId('search-input');
-        var keyword = $api.val(el);
-        api.openWin({
-            name: 'searchWin',
-            url: './html/searchKey_win.html',
-            pageParam: {
-                cartId: keyword
-            }
-        });
-        return false;
-    }
+    
 </script>
 
 </html>
